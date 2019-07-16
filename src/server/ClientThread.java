@@ -1,14 +1,10 @@
 package server;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
-import java.nio.file.Files;
 
 public class ClientThread extends Thread {
 	private InputStream inputStream = null;
@@ -64,32 +60,23 @@ public class ClientThread extends Thread {
 					readed += inputStream.read(message, readed, blockSize - readed);
 				} while (readed < blockSize);
 
-				// send(message);
+				send(message);
 
-				// XXX Remove after tests
-				if (type.equals("ImageBMP")) {
-					String tmpFilePath = "tmp/" + System.currentTimeMillis();
-					InputStream in = new ByteArrayInputStream(message);
-					OutputStream out = new FileOutputStream(tmpFilePath);
-
-					// Transfer bytes from in to out
-					byte[] buf = new byte[1024];
-					int len;
-					while ((len = in.read(buf)) > 0) {
-						out.write(buf, 0, len);
-					}
-					in.close();
-					out.close();
-
-					System.out.println("Press enter to continue...");
-					System.in.read();
-
-					File f = new File(tmpFilePath);
-					send(Files.readAllBytes(f.toPath()));
-					f.delete();
-				} else {
-					send(message);
-				}
+				/*
+				 * You can use this to save your files if (type.equals("ImageBMP")) { String
+				 * tmpFilePath = "tmp/" + System.currentTimeMillis(); InputStream in = new
+				 * ByteArrayInputStream(message); OutputStream out = new
+				 * FileOutputStream(tmpFilePath);
+				 * 
+				 * // Transfer bytes from in to out byte[] buf = new byte[1024]; int len; while
+				 * ((len = in.read(buf)) > 0) { out.write(buf, 0, len); } in.close();
+				 * out.close();
+				 * 
+				 * System.out.println("Press enter to continue..."); System.in.read();
+				 * 
+				 * File f = new File(tmpFilePath); send(Files.readAllBytes(f.toPath()));
+				 * f.delete(); } else { send(message); }
+				 */
 
 			}
 		} catch (Exception e) {

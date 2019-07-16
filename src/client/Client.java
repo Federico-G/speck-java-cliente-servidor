@@ -139,7 +139,7 @@ public class Client {
 			String extension = file.getName().substring(file.getName().lastIndexOf('.') + 1);
 			try {
 				byte[] b = Files.readAllBytes(file.toPath());
-				Thread.sleep(500); // XXX
+				// Thread.sleep(500); // XXX
 				send(b, "Image" + extension.toUpperCase());
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -273,7 +273,7 @@ public class Client {
 					} else if (message.getType().startsWith("Image")) {
 						try {
 							String imageType = message.getType().substring(5).toLowerCase();
-							if(imageType.equals("bmp")) {
+							if (imageType.equals("bmp")) {
 								imageType = "png";
 							}
 							BufferedImage image = (BufferedImage) message.get();
@@ -302,7 +302,7 @@ public class Client {
 			server = prop.getProperty("SERVER");
 			port = Integer.parseInt(prop.getProperty("PORT"));
 			name = prop.getProperty("NAME");
-			key =  javax.xml.bind.DatatypeConverter.parseHexBinary(prop.getProperty("KEY"));
+			key = javax.xml.bind.DatatypeConverter.parseHexBinary(prop.getProperty("KEY"));
 			debug = prop.getProperty("DEBUG").toUpperCase().equals("TRUE");
 		} catch (Exception e) {
 			e.printStackTrace();
